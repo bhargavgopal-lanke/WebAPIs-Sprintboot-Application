@@ -38,9 +38,11 @@ public class GetApis {
 		return "get post deatils for:" + postid; 
 	};
 	
-	@GetMapping("{seoTitle}/dp/{productId}")
-	public String getAmazonProductDetails(@PathVariable String seoTitle, @PathVariable String productId) {
-		return "get amazon product details for: " + seoTitle + " with product id " + productId;
+	@GetMapping("{seoTitle}/dp/{productId}/{tomato}")
+	public String getAmazonProductDetails(@PathVariable String seoTitle,
+			@PathVariable String productId, @PathVariable String tomato) {
+		return "get amazon product details for: " + seoTitle + 
+				" with product id " + productId + " and tomato " + tomato;
 	};
 	
 }
