@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GetApiPartTwo {
 	
-	@GetMapping("s")
-	public String newApi(@RequestParam String n) {
-		return n;
-	}
+
 	
 }
