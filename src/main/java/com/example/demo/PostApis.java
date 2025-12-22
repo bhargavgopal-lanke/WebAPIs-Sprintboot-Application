@@ -7,12 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PostApis {
-
-    private final Authentication authentication;
-
-    PostApis(Authentication authentication) {
-        this.authentication = authentication;
-    }
 	
 	@PostMapping("/auth/login")
 		public String Login(@RequestParam String email, @RequestParam String password) {
