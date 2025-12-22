@@ -13,7 +13,7 @@ public class UserData {
 	}
 	
 	public String getName() {
-		return this.username;
+		return username;
 	}
 	
 	public void setEmail(String email) {
@@ -21,7 +21,7 @@ public class UserData {
 	}
 	
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 	
 	public void setPassword(String password) {
@@ -29,7 +29,7 @@ public class UserData {
 	}
 	
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 	
 	public void setMobile(String mobile) {
@@ -37,7 +37,7 @@ public class UserData {
 	}
 	
 	public String getMobile() {
-		return this.mobile;
+		return mobile;
 	}
 	
 }
