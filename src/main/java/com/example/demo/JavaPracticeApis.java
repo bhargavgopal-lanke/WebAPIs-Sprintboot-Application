@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class JavaPracticeApis {
 	
 	@GetMapping("/watchpractice")
-	public String getVideoDetails(@RequestParam String v) {
-		return v;
+	public String getVideoDetails(@RequestParam String v, @RequestParam String t) {
+		return v + " " + t;
 	}
 }
