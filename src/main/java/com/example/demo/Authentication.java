@@ -4,21 +4,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Authentication {
-	@GetMapping("auth-login")
-	public String login() {
-		System.out.println("login");
-		return "login successfull"; 
+	@GetMapping("/login")
+	public void login() {
+		System.out.println("Login successful");
 	}
-	
-	@GetMapping("create-account")
+	@GetMapping("/signup")
 	public String signup() {
-		System.out.println("Sign up");
-		return "account successfull";
+		System.out.println("Signup succesful");
+		return "Signup successful";
 	}
 	
-	@GetMapping("reset-password")
-	public void resetPassword() {
-		System.out.println("Reset password");
+	@GetMapping("/resetpassword")
+	public String resetpassword() {
+		System.out.println("password reset is done");
+		return "Password reset is done";
 	}
 	
 }
