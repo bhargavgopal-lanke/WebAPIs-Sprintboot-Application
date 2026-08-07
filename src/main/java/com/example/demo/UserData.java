@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserData {
 	String username;
@@ -8,12 +9,12 @@ public class UserData {
 	String mobile;
 	
 	
-	public void setname(String name) {
-		this.username = name;
+	public void setUserName(String username) {
+		this.username = username;
 	}
 	
-	public String getName() {
-		return username;
+	public String getUserName() {
+		return this.username;
 	}
 	
 	public void setEmail(String email) {
