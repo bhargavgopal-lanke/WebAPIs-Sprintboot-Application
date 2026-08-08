@@ -6,16 +6,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.UserDataNew;
 import com.example.demo.pojo.LoginApiData;
+import com.example.demo.pojo.SignupData;
 
 @Service
 public class AuthService {
+	
+	// This is login method
 	public String login(LoginApiData loginApiData) {
 		String dbEmail = "bhargav@gmail.com";
 		String dbPwd = "1253624673462";
-
-		System.out.println("login pwd" + loginApiData.getPassword());
 		
-		Boolean emailValidation = loginApiData.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+		// Boolean emailValidation = loginApiData.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
 
 //		if (emailValidation == true) {
 //			return "Email is in proper format";
@@ -32,6 +33,16 @@ public class AuthService {
 		} else {
 			return "invalid data";
 		}
+	}
+	
+	// this is sign up method
+	public String signup(SignupData signupData) {
+		if(signupData != null) {
+			return "Signupdata is: " + signupData.toString();
+		} else {
+			return "Signup data is missing";
+		}
+			
 	}
 
 }

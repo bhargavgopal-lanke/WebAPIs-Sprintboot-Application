@@ -8,7 +8,7 @@ import lombok.Data;
 public class LoginApiData {
 	@NotNull
 	@NotBlank
-	@matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+	// @matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
 	private String email;
 	
 	@NotNull
