@@ -5,10 +5,10 @@ import lombok.Data;
 // name , email,password, mobile, gender, country
 @Data
 public class SignupData {
-	public String name;
-	public String email;
-	public String password;
-	public String mobile;
-	public String gender;
-	public String country;
+	private String name;
+	private String email;
+	private String password;
+	private String mobile;
+	private String gender;
+	private String country;
 }
