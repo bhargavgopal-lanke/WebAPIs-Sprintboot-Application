@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CommentsyoutubeApi {
-	public String commentId;
-	public String commentText;
+	private String commentId;
+	private String commentText;
 }
