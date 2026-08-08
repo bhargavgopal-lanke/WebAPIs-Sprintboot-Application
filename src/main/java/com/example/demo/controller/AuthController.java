@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.pojo.CommentsyoutubeApi;
 import com.example.demo.pojo.LoginApiData;
 import com.example.demo.pojo.SignupData;
 import com.example.demo.service.AuthService;
@@ -35,6 +36,11 @@ public class AuthController {
 	public String signup(@RequestBody SignupData signupData) {
 		String signupdataResponse = authService.signup(signupData);				
 		return signupdataResponse;
+	}
+	
+	@PostMapping("v4/comments/add")
+	public String  Comments(@RequestBody CommentsyoutubeApi commnetsyoutubeapi) {
+		return "Comments data" +" " + commnetsyoutubeapi.toString();
 	}
 	
 }
