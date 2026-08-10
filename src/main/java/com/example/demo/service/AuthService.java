@@ -10,39 +10,39 @@ import com.example.demo.pojo.SignupData;
 
 @Service
 public class AuthService {
-	
+
 	// This is login method
 	public String login(LoginApiData loginApiData) {
 		String dbEmail = "bhargav@gmail.com";
 		String dbPwd = "1253624673462";
-		
-		// Boolean emailValidation = loginApiData.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
 
-//		if (emailValidation == true) {
-//			return "Email is in proper format";
-//		} 
-		
-		if(loginApiData.getPassword().length() < 8) {
-			return "Password is missing";
+		Boolean emailValidation = loginApiData.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+		System.out.println("Email validation is: " + emailValidation);
+
+		if (emailValidation == true) {
+			return "Email is in proper format";
 		}
 
-//		return "userData" + loginApiData.getPassword();
+		if (loginApiData.getPassword().length() < 8) {
+			return "Password is missing";
+		}
 
 		if (dbEmail.equals(loginApiData.getEmail()) && dbPwd.equals(loginApiData.getPassword())) {
 			return "userdata" + loginApiData.toString();
 		} else {
 			return "invalid data";
 		}
+
 	}
-	
+
 	// this is sign up method
 	public String signup(SignupData signupData) {
-		if(signupData != null) {
+		if (signupData != null) {
 			return "Signupdata is: " + signupData.toString();
 		} else {
 			return "Signup data is missing";
 		}
-			
+
 	}
 
 }

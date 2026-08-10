@@ -6,12 +6,12 @@ import lombok.Data;
 
 @Data
 public class LoginApiData {
-	@NotNull
-	@NotBlank
+//	@NotNull
+//	@NotBlank
 	// @matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
 	private String email;
 	
-	@NotNull
-	@NotBlank
+//	@NotNull
+//	@NotBlank
 	private String password;
 }
