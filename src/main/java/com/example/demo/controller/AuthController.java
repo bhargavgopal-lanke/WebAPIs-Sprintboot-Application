@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.apache.catalina.util.ErrorPageSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,14 @@ public class AuthController {
 	public AuthService authService;
 
 	@PostMapping("/v3/login")
-	public String login(@Valid @RequestBody LoginApiData loginApiData) {
+	public String login(@Valid @RequestBody LoginApiData loginApiData, BindingResult validationResult) {
+		System.out.println(validationResult.hasErrors());
+		if(validationResult.hasErrors() == true) {
+			validationResult.getFieldErrors().forEach(Error -> {
+				System.out.println(Error.getField());
+				System.out.println(Error.getDefaultMessage());
+			});
+		}
 		String responseString = authService.login(loginApiData);
 		// HashMap<String, String> errorsMap = new HashMap<String, String>();
 		return responseString;
