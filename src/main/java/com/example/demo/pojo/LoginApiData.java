@@ -8,13 +8,13 @@ import lombok.Data;
 
 @Data
 public class LoginApiData {
-	@NotNull
-	@NotBlank
-	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$")
+	@NotNull(message = "Email should not be null")
+	@NotBlank(message = "Email should not be blank")
+	//@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email should match this pattern")
 	private String email;
-	
-	@NotNull
-	@NotBlank
-	@Size(min=8, max= 20)
+
+	@NotNull(message = "password should not be null")
+	@NotBlank(message = "password should not be blank")
+	@Size(min = 8, message = "password must be min 8 characters")
 	private String password;
 }
