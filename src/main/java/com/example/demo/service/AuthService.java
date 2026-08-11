@@ -14,7 +14,7 @@ public class AuthService {
 	// This is login method
 	public String login(LoginApiData loginApiData) {
 		String dbEmail = "bhargav@gmail.com";
-		String dbPwd = "1253624673462";
+		String dbPwd = "123456789";
 
 		/*
 		 * Boolean emailValidation = loginApiData.getEmail().matches(
