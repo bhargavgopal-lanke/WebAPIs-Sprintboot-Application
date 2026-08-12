@@ -6,6 +6,10 @@ import java.util.Map;
 
 import org.apache.catalina.util.ErrorPageSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,7 +35,7 @@ public class AuthController {
 	public AuthService authService;
 
 	@PostMapping("/v3/login")
-	public Map<String, Object> login(@Valid @RequestBody LoginApiData loginApiData, BindingResult validationResult) {
+	public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginApiData loginApiData, BindingResult validationResult) {
 
 		if (validationResult.hasErrors() == true) {
 			Map<String, String> errorsResponse = new HashMap<String, String>();
@@ -44,7 +48,7 @@ public class AuthController {
 			loginApiResponse.put("Result", "Failed");
 			loginApiResponse.put("message", "Unable to process your request");
 			loginApiResponse.put("errors", errorsResponse);
-			return loginApiResponse;
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginApiResponse);
 		} else {
 			String responseString = authService.login(loginApiData);
 			// preserve insertion order for consistent JSON output
@@ -57,7 +61,7 @@ public class AuthController {
 			userObjMap.put("profilepic", "hgdsjhsdhshdsd");
 			response.put("Login Result", responseString);
 			response.put("userData", userObjMap);
-			return response;
+			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 	}
 
