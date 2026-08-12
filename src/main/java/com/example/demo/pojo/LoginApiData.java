@@ -10,7 +10,7 @@ import lombok.Data;
 public class LoginApiData {
 	@NotNull(message = "Email should not be null")
 	@NotBlank(message = "Email should not be blank")
-	//@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email should match this pattern")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email should match this pattern")
 	private String email;
 
 	@NotNull(message = "password should not be null")

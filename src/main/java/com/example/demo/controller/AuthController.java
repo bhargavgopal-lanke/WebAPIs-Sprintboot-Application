@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.catalina.util.ErrorPageSupport;
@@ -30,19 +31,32 @@ public class AuthController {
 	public AuthService authService;
 
 	@PostMapping("/v3/login")
-	public Map login(@Valid @RequestBody LoginApiData loginApiData, BindingResult validationResult) {
+	public Map<String, Object> login(@Valid @RequestBody LoginApiData loginApiData, BindingResult validationResult) {
 
 		if (validationResult.hasErrors() == true) {
 			Map<String, String> errorsResponse = new HashMap<String, String>();
 			validationResult.getFieldErrors().forEach(Error -> {
-				// Hashmap stores key values pairs we use put to add the key and value
+			// Hashmap stores key values pairs we use put to add the key and value
 				errorsResponse.put(Error.getField(), Error.getDefaultMessage());
 			});
-			return errorsResponse;
+			// use LinkedHashMap to preserve insertion order so "Result" appears before "errors"
+			Map<String, Object> loginApiResponse = new LinkedHashMap<String, Object>();
+			loginApiResponse.put("Result", "Failed");
+			loginApiResponse.put("message", "Unable to process your request");
+			loginApiResponse.put("errors", errorsResponse);
+			return loginApiResponse;
 		} else {
 			String responseString = authService.login(loginApiData);
-			Map<String, String> response = new HashMap<String, String>();
-			response.put("Login Result",  responseString);
+			// preserve insertion order for consistent JSON output
+			Map<String, Object> response = new LinkedHashMap<String, Object>();
+			Map<String, Object> userObjMap = new HashMap<String, Object>();
+			userObjMap.put("Success", "true");
+			userObjMap.put("username", "bhargavlanke");
+			userObjMap.put("email", "bhargav@gmail.com");
+			userObjMap.put("phone",  "9154905425");
+			userObjMap.put("profilepic", "hgdsjhsdhshdsd");
+			response.put("Login Result", responseString);
+			response.put("userData", userObjMap);
 			return response;
 		}
 	}
