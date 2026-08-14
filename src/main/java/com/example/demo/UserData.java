@@ -16,6 +16,15 @@ public class UserData {
 	public String getUserName() {
 		return this.username;
 	}
+
+	// compatibility methods used elsewhere in the project
+	public String getName() {
+		return this.getUserName();
+	}
+
+	public String getUsername() {
+		return this.getUserName();
+	}
 	
 	public void setEmail(String email) {
 		this.email = email;
