@@ -1,16 +1,21 @@
 package com.example.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.UserDataNew;
+import com.example.demo.entity.User;
 import com.example.demo.pojo.LoginApiData;
 import com.example.demo.pojo.SignupData;
+import com.example.demo.repository.UserRepository;
 
 @Service
 public class AuthService {
-
+	
+	@Autowired UserRepository userRepository;
+	
 	// This is login method
 	public String login(LoginApiData loginApiData) {
 		String dbEmail = "bhargav@gmail.com";
@@ -36,11 +41,17 @@ public class AuthService {
 
 	// this is sign up method
 	public String signup(SignupData signupData) {
-		if (signupData != null) {
-			return "Signupdata is: " + signupData.toString();
-		} else {
-			return "Signup data is missing";
-		}
+		User user = new User();
+		user.name = signupData.getName();
+		user.email = signupData.getEmail();
+		user.password = signupData.getPassword();
+		userRepository.save(user);
+		return "Data is inserted";
+		
+		/*
+		 * if (signupData != null) { return "Signupdata is: " + signupData.toString(); }
+		 * else { return "Signup data is missing"; }
+		 */
 
 	}
 
