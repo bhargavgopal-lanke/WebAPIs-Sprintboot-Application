@@ -51,7 +51,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.42</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<!-- Source:
 		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
@@ -82,6 +82,25 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- Configure the Maven compiler plugin so Lombok annotation processing runs during
+			     Maven builds. This ensures generated getters/setters are available to the
+			     compiler (fixes the "cannot find symbol" errors for Lombok-generated methods). -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<release>${java.version}</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.42</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
