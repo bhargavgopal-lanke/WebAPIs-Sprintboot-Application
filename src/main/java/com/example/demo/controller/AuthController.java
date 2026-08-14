@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.entity.User;
 import com.example.demo.pojo.CommentsyoutubeApi;
 import com.example.demo.pojo.LoginApiData;
 import com.example.demo.pojo.SignupData;
@@ -76,7 +77,6 @@ public class AuthController {
 
 	@PostMapping("v4/Signup")
 	public ResponseEntity<Map<String, Object>> signup(@Valid @RequestBody SignupData signupData, BindingResult signupValidationResult) {
-		System.out.println("Signupdata is:" + signupValidationResult.hasErrors());
 		if (signupValidationResult.hasErrors() == true) {
 			Map<String, Object> signupErrorsResponse = new HashMap<String, Object>();
 			signupValidationResult.getFieldErrors().forEach(Error -> {
@@ -84,10 +84,10 @@ public class AuthController {
 			});
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(signupErrorsResponse);
 		} else {
-			String signupdataResponse = authService.signup(signupData);
+			User signupdataResponse = authService.signup(signupData);
 			Map<String, Object> signUpresponse = new HashMap<String, Object>();
 			signUpresponse.put("Response", "User details submitted");
-			signUpresponse.put("Business Response", "Signup is succesful");
+			signUpresponse.put("Business Response", signupdataResponse);
 			return ResponseEntity.status(HttpStatus.OK).body(signUpresponse);
 		}
 
