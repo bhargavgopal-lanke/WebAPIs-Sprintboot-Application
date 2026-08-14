@@ -1,4 +1,4 @@
-package com.example.project.entity;
+package com.example.demo.project.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,8 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-//for datbabase table we are using this annotation
-@Entity     
+@Entity      
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
