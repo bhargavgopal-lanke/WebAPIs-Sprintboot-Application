@@ -21,10 +21,10 @@ public class SignupData {
 	@NotNull(message="Password should not be null")
 	@Size(min=8, message="Password must be min 8 characters")
 	private String password;
-	@NotNull(message="Mobile should not be null")
-	@NotBlank(message="Mobile should not be blank")
-	@Pattern(regexp = "^[0-9]{10}$", message="Mobile should be 10 digits")
-	private String mobile;
+//	@NotNull(message="Mobile should not be null")
+//	@NotBlank(message="Mobile should not be blank")
+//	@Pattern(regexp = "^[0-9]{10}$", message="Mobile should be 10 digits")
+//	private String mobile;
 //	private String gender;
 //	private String country;
 }

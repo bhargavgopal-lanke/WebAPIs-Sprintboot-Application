@@ -76,7 +76,6 @@ public class AuthController {
 
 	@PostMapping("v4/Signup")
 	public ResponseEntity<Map<String, Object>> signup(@Valid @RequestBody SignupData signupData, BindingResult signupValidationResult) {
-		System.out.println("Signupdata is:" + signupValidationResult.hasErrors());
 		if (signupValidationResult.hasErrors() == true) {
 			Map<String, Object> signupErrorsResponse = new HashMap<String, Object>();
 			signupValidationResult.getFieldErrors().forEach(Error -> {
@@ -87,7 +86,7 @@ public class AuthController {
 			String signupdataResponse = authService.signup(signupData);
 			Map<String, Object> signUpresponse = new HashMap<String, Object>();
 			signUpresponse.put("Response", "User details submitted");
-			signUpresponse.put("Business Response", "Signup is succesful");
+			signUpresponse.put("Business Response", signupdataResponse);
 			return ResponseEntity.status(HttpStatus.OK).body(signUpresponse);
 		}
 
