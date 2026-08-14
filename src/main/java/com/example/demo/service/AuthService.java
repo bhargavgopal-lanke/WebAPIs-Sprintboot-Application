@@ -13,7 +13,7 @@ import com.example.demo.repository.UserRepository;
 
 @Service
 public class AuthService {
-	
+
 	@Autowired UserRepository userRepository;
 	
 	// This is login method
@@ -40,13 +40,13 @@ public class AuthService {
 	}
 
 	// this is sign up method
-	public String signup(SignupData signupData) {
+	public User signup(SignupData signupData) {
 		User user = new User();
 		user.name = signupData.getName();
 		user.email = signupData.getEmail();
 		user.password = signupData.getPassword();
-		userRepository.save(user);
-		return "Data is inserted";
+		User newUser = userRepository.save(user);
+		return newUser;
 		
 		/*
 		 * if (signupData != null) { return "Signupdata is: " + signupData.toString(); }

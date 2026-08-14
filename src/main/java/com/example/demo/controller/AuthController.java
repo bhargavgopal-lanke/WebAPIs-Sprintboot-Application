@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.entity.User;
 import com.example.demo.pojo.CommentsyoutubeApi;
 import com.example.demo.pojo.LoginApiData;
 import com.example.demo.pojo.SignupData;
@@ -83,7 +84,7 @@ public class AuthController {
 			});
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(signupErrorsResponse);
 		} else {
-			String signupdataResponse = authService.signup(signupData);
+			User signupdataResponse = authService.signup(signupData);
 			Map<String, Object> signUpresponse = new HashMap<String, Object>();
 			signUpresponse.put("Response", "User details submitted");
 			signUpresponse.put("Business Response", signupdataResponse);
