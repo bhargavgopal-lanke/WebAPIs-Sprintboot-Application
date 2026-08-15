@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.demo.UserDataNew;
 import com.example.demo.entity.User;
 import com.example.demo.pojo.LoginApiData;
+import com.example.demo.pojo.ProfileUpdateApiData;
 import com.example.demo.pojo.SignupData;
 import com.example.demo.repository.UserRepository;
 
@@ -37,6 +38,13 @@ public class AuthService {
 			return "invalid data";
 		}
 
+	}
+	
+	public User profileUpdate(ProfileUpdateApiData profileUpdateApiData) {
+		int userId = profileUpdateApiData.getId();
+		String userPassword = profileUpdateApiData.getPassword();
+	    User user =	userRepository.findById(userId);
+		return profileUpdateApiData.toString();
 	}
 
 	// this is sign up method
