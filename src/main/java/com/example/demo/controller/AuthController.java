@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.User;
 import com.example.demo.pojo.CommentsyoutubeApi;
 import com.example.demo.pojo.LoginApiData;
+import com.example.demo.pojo.ProfileUpdateApiData;
 import com.example.demo.pojo.SignupData;
 import com.example.demo.service.AuthService;
 
@@ -68,6 +69,13 @@ public class AuthController {
 			response.put("userData", userObjMap);
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
+	}
+	
+	
+	@PostMapping("profile-update")
+	public String profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
+		String profileResponse = authService.profileUpdate(profileUpdateApiData);
+		return profileResponse;
 	}
 
 	// homework
