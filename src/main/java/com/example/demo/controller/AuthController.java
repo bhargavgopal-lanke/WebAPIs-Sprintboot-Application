@@ -70,12 +70,19 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 	}
-	
-	
+
 	@PostMapping("profile-update")
-	public String profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
-		String profileResponse = authService.profileUpdate(profileUpdateApiData);
-		return profileResponse;
+	public Map<String, String> profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
+		Boolean profileResponse = authService.profileUpdate(profileUpdateApiData);
+		Map<String, String> profilesResObjMap = new HashMap<String, String>();
+		if (profileResponse == true) {
+			profilesResObjMap.put("result", "success");
+			profilesResObjMap.put("message", "successfully updated");
+		} else {
+			profilesResObjMap.put("result", "fail");
+			profilesResObjMap.put("message", "User doesnt exist");
+		}
+		return profilesResObjMap;
 	}
 
 	// homework
@@ -84,7 +91,8 @@ public class AuthController {
 	// structured format like login method.
 
 	@PostMapping("v4/Signup")
-	public ResponseEntity<Map<String, Object>> signup(@Valid @RequestBody SignupData signupData, BindingResult signupValidationResult) {
+	public ResponseEntity<Map<String, Object>> signup(@Valid @RequestBody SignupData signupData,
+			BindingResult signupValidationResult) {
 		if (signupValidationResult.hasErrors() == true) {
 			Map<String, Object> signupErrorsResponse = new HashMap<String, Object>();
 			signupValidationResult.getFieldErrors().forEach(Error -> {

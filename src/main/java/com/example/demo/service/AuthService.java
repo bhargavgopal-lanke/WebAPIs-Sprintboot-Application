@@ -1,5 +1,9 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +19,9 @@ import com.example.demo.repository.UserRepository;
 @Service
 public class AuthService {
 
-	@Autowired UserRepository userRepository;
-	
+	@Autowired
+	UserRepository userRepository;
+
 	// This is login method
 	public String login(LoginApiData loginApiData) {
 		String dbEmail = "bhargav@gmail.com";
@@ -39,12 +44,24 @@ public class AuthService {
 		}
 
 	}
-	
-	public User profileUpdate(ProfileUpdateApiData profileUpdateApiData) {
-		int userId = profileUpdateApiData.getId();
-		String userPassword = profileUpdateApiData.getPassword();
-	    User user =	userRepository.findById(userId);
-		return profileUpdateApiData.toString();
+
+	// this is the service to update password and it has the logic to update
+	public Boolean profileUpdate(ProfileUpdateApiData profileUpdateApiData) { // we receive the input data from the
+																				// controller
+		int userId = profileUpdateApiData.getId(); // get the id from the API
+		String userNewPassword = profileUpdateApiData.getPassword(); // this is the password received from API
+		Optional<User> dbresponse = userRepository.findById(userId); // We get the db response based on the id
+		if (dbresponse.isPresent() == true) {
+			User user = dbresponse.get(); // basically to user object we assign entity its also db replication but here
+											// we assigned the db to User entity object
+			user.setPassword(userNewPassword);
+			userRepository.save(user);
+			return true;
+//			return "Password is updated";
+		} else {
+			return false;
+//			return "User doesnt exist";
+		}
 	}
 
 	// this is sign up method
@@ -55,7 +72,7 @@ public class AuthService {
 		user.password = signupData.getPassword();
 		User newUser = userRepository.save(user);
 		return newUser;
-		
+
 		/*
 		 * if (signupData != null) { return "Signupdata is: " + signupData.toString(); }
 		 * else { return "Signup data is missing"; }
