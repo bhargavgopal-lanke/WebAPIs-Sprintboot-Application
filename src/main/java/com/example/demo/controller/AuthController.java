@@ -70,8 +70,7 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 	}
-	
-	
+
 	@PostMapping("profile-update")
 	public String profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
 		String profileResponse = authService.profileUpdate(profileUpdateApiData);
@@ -84,7 +83,8 @@ public class AuthController {
 	// structured format like login method.
 
 	@PostMapping("v4/Signup")
-	public ResponseEntity<Map<String, Object>> signup(@Valid @RequestBody SignupData signupData, BindingResult signupValidationResult) {
+	public ResponseEntity<Map<String, Object>> signup(@Valid @RequestBody SignupData signupData,
+			BindingResult signupValidationResult) {
 		if (signupValidationResult.hasErrors() == true) {
 			Map<String, Object> signupErrorsResponse = new HashMap<String, Object>();
 			signupValidationResult.getFieldErrors().forEach(Error -> {
