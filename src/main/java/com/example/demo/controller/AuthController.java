@@ -72,9 +72,17 @@ public class AuthController {
 	}
 
 	@PostMapping("profile-update")
-	public String profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
-		String profileResponse = authService.profileUpdate(profileUpdateApiData);
-		return profileResponse;
+	public Map<String, String> profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
+		Boolean profileResponse = authService.profileUpdate(profileUpdateApiData);
+		Map<String, String> profilesResObjMap = new HashMap<String, String>();
+		if (profileResponse == true) {
+			profilesResObjMap.put("result", "success");
+			profilesResObjMap.put("message", "successfully updated");
+		} else {
+			profilesResObjMap.put("result", "fail");
+			profilesResObjMap.put("message", "User doesnt exist");
+		}
+		return profilesResObjMap;
 	}
 
 	// homework

@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class AuthService {
 	}
 
 	// this is the service to update password and it has the logic to update
-	public String profileUpdate(ProfileUpdateApiData profileUpdateApiData) { // we receive the input data from the
+	public Boolean profileUpdate(ProfileUpdateApiData profileUpdateApiData) { // we receive the input data from the
 																				// controller
 		int userId = profileUpdateApiData.getId(); // get the id from the API
 		String userNewPassword = profileUpdateApiData.getPassword(); // this is the password received from API
@@ -54,9 +56,11 @@ public class AuthService {
 											// we assigned the db to User entity object
 			user.setPassword(userNewPassword);
 			userRepository.save(user);
-			return "Password is updated";
+			return true;
+//			return "Password is updated";
 		} else {
-			return "User doesnt exist";
+			return false;
+//			return "User doesnt exist";
 		}
 	}
 
