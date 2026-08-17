@@ -37,6 +37,18 @@ public class AuthService {
 		}
 	}
 
+	public Object loginWithQueryApi(LoginApiData loginApiData) {
+		String dbEmail = loginApiData.getEmail();
+		String dbPassword = loginApiData.getPassword();
+		Optional<User> dbEmailData = userRepository.dbLoginWithQuery(dbEmail, dbPassword);
+		if (dbEmailData.isPresent() == true) {
+			return dbEmailData.get();
+		} else {
+			return "user data not found";
+		}
+
+	}
+
 	// if we use object datatype we can return any data {string, User, Optional}
 	public Object fetchDataUsingEmailApi(EmailData emailData) {
 		Optional<User> dbEmailUser = userRepository.findByEmail(emailData.getEmail());

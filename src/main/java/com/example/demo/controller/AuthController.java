@@ -32,7 +32,6 @@ import com.example.demo.pojo.ProfileUpdateApiData;
 import com.example.demo.pojo.SignupData;
 import com.example.demo.pojo.Userid;
 import com.example.demo.service.AuthService;
-import com.example.demo.service.PostMappin;
 
 import jakarta.validation.Valid;
 
@@ -75,6 +74,12 @@ public class AuthController {
 			response.put("userData", userObjMap);
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
+	}
+	
+	//Login with query
+	@PostMapping("login-with-query")
+	public Object loginWithQueryApi(@RequestBody LoginApiData loginApiData) {
+		return authService.loginWithQueryApi(loginApiData);
 	}
 
 	// based on email fetch the data from the Db
