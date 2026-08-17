@@ -93,13 +93,15 @@ public class AuthController {
 	public Map<String, Object> userDetailsApi(@PathVariable int id) {
 		Optional<User> userDetailsresponse = authService.userDetailsApi(id);
 		Map<String, Object> updatedDataRResObjMap = new HashMap<String, Object>();
-		if (userDetailsresponse != null) {
+		if (userDetailsresponse.isPresent() == true) {
 			updatedDataRResObjMap.put("result", "success");
-			updatedDataRResObjMap.put("data", userDetailsresponse);
+			updatedDataRResObjMap.put("data", userDetailsresponse.get());
+			updatedDataRResObjMap.put("message", "ok");
 			return updatedDataRResObjMap;
 		} else {
 			updatedDataRResObjMap.put("result", "Failed");
 			updatedDataRResObjMap.put("data", userDetailsresponse);
+			updatedDataRResObjMap.put("message", "User not found");
 			return updatedDataRResObjMap;
 		}
 	}
