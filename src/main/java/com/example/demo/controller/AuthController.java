@@ -26,11 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.PostApis.user;
 import com.example.demo.entity.User;
 import com.example.demo.pojo.CommentsyoutubeApi;
+import com.example.demo.pojo.EmailData;
 import com.example.demo.pojo.LoginApiData;
 import com.example.demo.pojo.ProfileUpdateApiData;
 import com.example.demo.pojo.SignupData;
 import com.example.demo.pojo.Userid;
 import com.example.demo.service.AuthService;
+import com.example.demo.service.PostMappin;
 
 import jakarta.validation.Valid;
 
@@ -75,6 +77,12 @@ public class AuthController {
 		}
 	}
 
+	// based on email fetch the data from the Db
+	@PostMapping("api-email-data")
+	public Object fetchDataUsingEmailApi(@RequestBody EmailData emailData) {
+		return authService.fetchDataUsingEmailApi(emailData);		
+	}
+
 	@PostMapping("profile-update")
 	public Map<String, String> profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
 		Boolean profileResponse = authService.profileUpdate(profileUpdateApiData);
@@ -89,6 +97,8 @@ public class AuthController {
 		return profilesResObjMap;
 	}
 
+	
+	// based on the Id fetched all the details from the API
 	@GetMapping("userid/{id}")
 	public Map<String, Object> userDetailsApi(@PathVariable int id) {
 		Optional<User> userDetailsresponse = authService.userDetailsApi(id);
