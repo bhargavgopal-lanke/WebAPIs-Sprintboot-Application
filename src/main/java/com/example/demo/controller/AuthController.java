@@ -90,9 +90,18 @@ public class AuthController {
 	}
 
 	@GetMapping("userid/{id}")
-	public Optional<User> userDetailsApi(@PathVariable int id) {
+	public Map<String, Object> userDetailsApi(@PathVariable int id) {
 		Optional<User> userDetailsresponse = authService.userDetailsApi(id);
-		return userDetailsresponse;
+		Map<String, Object> updatedDataRResObjMap = new HashMap<String, Object>();
+		if (userDetailsresponse != null) {
+			updatedDataRResObjMap.put("result", "success");
+			updatedDataRResObjMap.put("data", userDetailsresponse);
+			return updatedDataRResObjMap;
+		} else {
+			updatedDataRResObjMap.put("result", "Failed");
+			updatedDataRResObjMap.put("data", userDetailsresponse);
+			return updatedDataRResObjMap;
+		}
 	}
 
 	// homework
