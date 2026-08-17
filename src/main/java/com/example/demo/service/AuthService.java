@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.hibernate.dialect.function.DateTruncEmulation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.UserDataNew;
 import com.example.demo.entity.User;
+import com.example.demo.pojo.EmailData;
 import com.example.demo.pojo.LoginApiData;
 import com.example.demo.pojo.ProfileUpdateApiData;
 import com.example.demo.pojo.SignupData;
@@ -28,16 +30,6 @@ public class AuthService {
 		String dbEmail = "bhargav@gmail.com";
 		String dbPwd = "123456789";
 
-		/*
-		 * Boolean emailValidation = loginApiData.getEmail().matches(
-		 * "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-		 * 
-		 * if (emailValidation == true) { return "Email is in proper format"; }
-		 * 
-		 * if (loginApiData.getPassword().length() < 8) { return "Password is missing";
-		 * }
-		 */
-
 		if (dbEmail.equals(loginApiData.getEmail()) && dbPwd.equals(loginApiData.getPassword())) {
 			return "userdata" + loginApiData.toString();
 		} else {
@@ -45,6 +37,29 @@ public class AuthService {
 		}
 	}
 
+	public Object loginWithQueryApi(LoginApiData loginApiData) {
+		String dbEmail = loginApiData.getEmail();
+		String dbPassword = loginApiData.getPassword();
+		Optional<User> dbEmailData = userRepository.dbLoginWithQuery(dbEmail, dbPassword);
+		if (dbEmailData.isPresent() == true) {
+			return dbEmailData.get();
+		} else {
+			return "user data not found";
+		}
+
+	}
+
+	// if we use object datatype we can return any data {string, User, Optional}
+	public Object fetchDataUsingEmailApi(EmailData emailData) {
+		Optional<User> dbEmailUser = userRepository.findByEmail(emailData.getEmail());
+		if (dbEmailUser.isPresent() == true) {
+			return dbEmailUser.get();
+		} else {
+			return "user not found";
+		}
+	}
+
+	// passing the id from the controller and returning the optional object
 	public Optional<User> userDetailsApi(int id) {
 		// get the userId from the db
 		Optional<User> dbResponse = userRepository.findById(id);
