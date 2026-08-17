@@ -14,6 +14,7 @@ import com.example.demo.entity.User;
 import com.example.demo.pojo.LoginApiData;
 import com.example.demo.pojo.ProfileUpdateApiData;
 import com.example.demo.pojo.SignupData;
+import com.example.demo.pojo.Userid;
 import com.example.demo.repository.UserRepository;
 
 @Service
@@ -42,7 +43,12 @@ public class AuthService {
 		} else {
 			return "invalid data";
 		}
+	}
 
+	public Optional<User> userDetailsApi(int id) {
+		// get the userId from the db
+		Optional<User> dbResponse = userRepository.findById(id);
+		return dbResponse;
 	}
 
 	// this is the service to update password and it has the logic to update
