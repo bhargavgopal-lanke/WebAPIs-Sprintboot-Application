@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.entity.User;
@@ -13,5 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@Query(value = "SELECT * FROM ss_test_db.user where email= :emailId and password = :pword ", nativeQuery = true)
 	Optional<User> dbLoginWithQuery(@Param("emailId") String dbEmail, @Param("pword") String dbPassword);
-
+	
+	@Procedure(procedureName = "proc_login")
+	Optional<User> dbLoginwithStoredProcudure(@Param("emailId") String dbEmail, @Param("pword") String dbPassword);
 }

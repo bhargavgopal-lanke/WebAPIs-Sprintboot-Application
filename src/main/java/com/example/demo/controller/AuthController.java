@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.security.PublicKey;
 // ...existing imports...
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -13,7 +14,9 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,21 +78,44 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 	}
-	
-	//Login with query
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Object> handlesAllExceptions(Exception ex) {
+		Map<String, Object> exceptionErrors = new HashMap<String, Object>();
+		exceptionErrors.put("message", ex.getMessage());
+		exceptionErrors.put("Status", "failed");
+
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exceptionErrors);
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> handleAllExceptionErrors(MethodArgumentNotValidException ex) {
+		Map<String, String> errorsMap = new HashMap<String, String>();
+		ex.getBindingResult().getFieldErrors().forEach(errors -> {
+			errorsMap.put(errors.getField(), errors.getDefaultMessage());
+		});
+		System.out.println(errorsMap);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("message", "unable to process your request");
+		responseMap.put("status", "Failed");
+		responseMap.put("errors", errorsMap);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
+	}
+
+	// Login with query
 	@PostMapping("login-with-query")
-	public Object loginWithQueryApi(@RequestBody LoginApiData loginApiData) {
+	public Object loginWithQueryApi(@Valid @RequestBody LoginApiData loginApiData) {
 		return authService.loginWithQueryApi(loginApiData);
 	}
 
 	// based on email fetch the data from the Db
 	@PostMapping("api-email-data")
-	public Object fetchDataUsingEmailApi(@RequestBody EmailData emailData) {
-		return authService.fetchDataUsingEmailApi(emailData);		
+	public Object fetchDataUsingEmailApi(@Valid @RequestBody EmailData emailData) {
+		return authService.fetchDataUsingEmailApi(emailData);
 	}
 
 	@PostMapping("profile-update")
-	public Map<String, String> profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
+	public Map<String, String> profileUpdate(@Valid @RequestBody ProfileUpdateApiData profileUpdateApiData) {
 		Boolean profileResponse = authService.profileUpdate(profileUpdateApiData);
 		Map<String, String> profilesResObjMap = new HashMap<String, String>();
 		if (profileResponse == true) {
@@ -102,7 +128,6 @@ public class AuthController {
 		return profilesResObjMap;
 	}
 
-	
 	// based on the Id fetched all the details from the API
 	@GetMapping("userid/{id}")
 	public Map<String, Object> userDetailsApi(@PathVariable int id) {
