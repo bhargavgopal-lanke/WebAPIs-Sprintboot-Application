@@ -79,45 +79,20 @@ public class AuthController {
 		}
 	}
 
-	/*
-	 * @ExceptionHandler(Exception.class) public ResponseEntity<Object>
-	 * handlesAllExceptions(Exception ex) { Map<String, Object> exceptionErrors =
-	 * new HashMap<String, Object>(); exceptionErrors.put("message",
-	 * ex.getMessage()); exceptionErrors.put("Status", "failed");
-	 * 
-	 * return
-	 * ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exceptionErrors)
-	 * ; }
-	 */
-
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> handleAllExceptionErrors(MethodArgumentNotValidException ex) {
-			Map<String, Object> errorsMap = new HashMap<String, Object>();
-			
-				ex.getBindingResult().getFieldErrors().forEach(errors -> {
-					errorsMap.put(errors.getField(), errors.getDefaultMessage());
-				});
-			Map<String, Object> responseMap = new HashMap<String, Object>();
-			responseMap.put("message", "unable to process your request");
-			responseMap.put("status","Failed");
-			responseMap.put("errors", errorsMap);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
-		}
-
 	// Login with query
 	@PostMapping("login-with-query")
-	public Object loginWithQueryApi(@RequestBody LoginApiData loginApiData) {
+	public Object loginWithQueryApi(@Valid @RequestBody LoginApiData loginApiData) {
 		return authService.loginWithQueryApi(loginApiData);
 	}
 
 	// based on email fetch the data from the Db
 	@PostMapping("api-email-data")
-	public Object fetchDataUsingEmailApi(@RequestBody EmailData emailData) {
+	public Object fetchDataUsingEmailApi(@Valid @RequestBody EmailData emailData) {
 		return authService.fetchDataUsingEmailApi(emailData);
 	}
 
 	@PostMapping("profile-update")
-	public Map<String, String> profileUpdate(@RequestBody ProfileUpdateApiData profileUpdateApiData) {
+	public Map<String, String> profileUpdate(@Valid @RequestBody ProfileUpdateApiData profileUpdateApiData) {
 		Boolean profileResponse = authService.profileUpdate(profileUpdateApiData);
 		Map<String, String> profilesResObjMap = new HashMap<String, String>();
 		if (profileResponse == true) {

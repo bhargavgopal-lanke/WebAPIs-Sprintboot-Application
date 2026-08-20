@@ -43,11 +43,11 @@ public class AuthService {
 		String dbPassword = loginApiData.getPassword();
 		Optional<User> dbEmailData = userRepository.dbLoginWithQuery(dbEmail, dbPassword);
 //		Optional<User> dbEmailData = userRepository.dbLoginwithStoredProcudure(dbEmail, dbPassword);
-		if (dbEmailData.isPresent() == true) {
+//		if (dbEmailData.isPresent() == true) {
 			return dbEmailData.get();
-		} else {
-			return "user data not found";
-		}
+//		} else {
+//			return "user data not found";
+//		}
 
 	}
 
